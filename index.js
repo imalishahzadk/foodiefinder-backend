@@ -8,7 +8,6 @@ const cors = require("cors");
 require('dotenv').config();
 // const { suggestRestaurants } = require('./controllers/reviewController');
 
-
 const restaurantRoute = require("./routes/restaurantRoute");
 // const restaurantRoute = require("./routes/restaurantDetailsRoute");
 const authRoute = require("./routes/authRoute");
@@ -18,58 +17,38 @@ const reviewRoutes = require('./routes/reviewRoute');
 db();
 
 const corsOptions = {
-  origin: "http://localhost:3000", // Allow only this origin
+  origin: "https://polite-meadow-000f8b800.4.azurestaticapps.net", // Allow only this origin
   credentials: true, // Allow credentials (cookies, etc.)
 };
 
 app.use(cors(corsOptions));
-
 
 // Middleware
 app.set("view engine", "pug");
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Welcome route
+app.get("/", (req, res) => {
+  res.send("Welcome to the Restaurant API! Explore our endpoints to discover more.");
+});
+
 // Use Routes
-app.use("/api/v1/auth", authRoute)
+app.use("/api/v1/auth", authRoute);
 app.use("/api/v1", restaurantRoute);
 app.use('/api/v1', reviewRoutes);
 app.use('/api/v1', require('./routes/favoriteRoute'));
 
-
+// Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something went wrong!");
 });
 
-
-
-// (async () => {
-//     try {
-//         // Mock response to capture the output
-//         const mockResponse = {
-//             json: (output) => console.log('Suggested Restaurants:', output),
-//             status: (statusCode) => ({
-//                 json: (output) => console.log(`Status ${statusCode}:`, output),
-//             }),
-//         };
-
-//         // Call the function
-//         console.log('Testing suggestRestaurants...');
-//         await suggestRestaurants({}, mockResponse);
-//     } catch (error) {
-//         console.error('Error testing suggestRestaurants:', error);
-//     }
-// })();
-
-// app.use(express.static("./frontend/build"))
-// app.get("*", (req, res)=>{
-//   res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
-// })
+// Start the server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`.bgBlack.yellow,"\n");
+  console.log(`Server is running on http://localhost:${PORT}`.bgBlack.yellow, "\n");
 });
