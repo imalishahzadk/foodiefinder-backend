@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const PORT = 8000;
 const db = require("./config/db");
-const bodyParser = require("express");
 const path = require("path");
 const cors = require("cors");
 require('dotenv').config();
@@ -15,22 +14,21 @@ const reviewRoutes = require('./routes/reviewRoute');
 // Database connection
 db();
 
-// Enable CORS for the specific frontend URL
+// Enable CORS for specific frontend URL
 app.use(
   cors({
-    origin: '*', // Temporarily allow all origins to verify if this resolves the issue
+    origin: 'https://build-ten-chi.vercel.app', // Specify frontend URL here
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
+    credentials: true, // Allow credentials if necessary (cookies, headers)
   })
 );
-
 
 // Middleware
 app.set("view engine", "pug");
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Welcome route
 app.get("/", (req, res) => {
