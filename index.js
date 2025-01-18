@@ -18,15 +18,13 @@ db();
 // Enable CORS for the specific frontend URL
 app.use(
   cors({
-    origin: 'https://build-ten-chi.vercel.app/', // Allow the frontend URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allow necessary HTTP methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Add any other headers your app uses
-    credentials: true, // Enable cookies if needed
+    origin: '*', // Temporarily allow all origins to verify if this resolves the issue
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
   })
 );
 
-// Optionally, handle preflight requests explicitly:
-app.options('*', cors());
 
 // Middleware
 app.set("view engine", "pug");
