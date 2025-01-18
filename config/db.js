@@ -3,13 +3,13 @@ require("dotenv").config();
 const color = require("colors")
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI || "mongodb+srv://imalishahzadk:%40qwerty82313@foodiefinder.nvgas.mongodb.net/foodiefinder", {
+    const conn = await mongoose.connect(process.env.MONGO_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log(`MongoDB Connected: ${conn.connection.host}`.bgWhite.black);
+    console.log(`MongoDB Connected: ${conn.connection.host}`.bgWhite.red);
   } catch (err) {
-    console.error(`Error in MongoDB: ${err.message}`.bgRed.white);
+    console.error(`Error in MongoDB: ${err.message}`.bgRed.red);
     process.exit(1);
   }
 };

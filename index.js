@@ -1,13 +1,12 @@
 const express = require("express");
 const app = express();
 const PORT = 8000;
-const dataset = require("./dataset.json");
 const db = require("./config/db");
 const bodyParser = require("express");
 const path = require("path");
 const cors = require("cors");
 require('dotenv').config();
-const { suggestRestaurants } = require('./controllers/reviewController');
+// const { suggestRestaurants } = require('./controllers/reviewController');
 
 
 const restaurantRoute = require("./routes/restaurantRoute");
@@ -49,28 +48,28 @@ app.use((err, req, res, next) => {
 
 
 
-(async () => {
-    try {
-        // Mock response to capture the output
-        const mockResponse = {
-            json: (output) => console.log('Suggested Restaurants:', output),
-            status: (statusCode) => ({
-                json: (output) => console.log(`Status ${statusCode}:`, output),
-            }),
-        };
+// (async () => {
+//     try {
+//         // Mock response to capture the output
+//         const mockResponse = {
+//             json: (output) => console.log('Suggested Restaurants:', output),
+//             status: (statusCode) => ({
+//                 json: (output) => console.log(`Status ${statusCode}:`, output),
+//             }),
+//         };
 
-        // Call the function
-        console.log('Testing suggestRestaurants...');
-        await suggestRestaurants({}, mockResponse);
-    } catch (error) {
-        console.error('Error testing suggestRestaurants:', error);
-    }
-})();
+//         // Call the function
+//         console.log('Testing suggestRestaurants...');
+//         await suggestRestaurants({}, mockResponse);
+//     } catch (error) {
+//         console.error('Error testing suggestRestaurants:', error);
+//     }
+// })();
 
-app.use(express.static("./frontend/build"))
-app.get("*", (req, res)=>{
-  res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
-})
+// app.use(express.static("./frontend/build"))
+// app.get("*", (req, res)=>{
+//   res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+// })
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`.bgBlack.yellow,"\n");
 });
