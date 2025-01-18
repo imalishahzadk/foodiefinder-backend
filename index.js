@@ -15,8 +15,13 @@ const reviewRoutes = require('./routes/reviewRoute');
 // Database connection
 db();
 
-// Allow all origins with CORS
-app.use(cors());
+app.use(
+  cors({
+    origin: 'https://foodfiner.netlify.app/', // Replace with your Netlify URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allow necessary HTTP methods
+    credentials: true, // Enable cookies if needed
+  })
+);
 
 // Middleware
 app.set("view engine", "pug");
